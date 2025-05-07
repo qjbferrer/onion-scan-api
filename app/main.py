@@ -1,6 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from app.model import predict_pest
-from app.schema import PredictionResponse  # Make sure this file exists and is correct
+from app.schema import PredictionResponse
 from PIL import Image
 import io
 
@@ -12,10 +12,23 @@ async def predict(
     latitude: float = 0.0,
     longitude: float = 0.0
 ):
-    contents = await file.read()
-    image = Image.open(io.BytesIO(contents)).convert("RGB")
-    prediction = predict_pest(image)
-    return PredictionResponse(prediction=prediction, latitude=latitude, longitude=longitude)
+    try:
+        contents = await file.read()
+        image = Image.open(io.BytesIO(contents)).convert("RGB")
+        
+        # Log the size of the image for debugging
+        print(f"Received image with size: {image.size}")
+        
+        prediction = predict_pest(image)
+        
+        # Log the prediction result
+        print(f"Prediction: {prediction}")
+        
+        return PredictionResponse(prediction=prediction, latitude=latitude, longitude=longitude)
+    except Exception as e:
+        # Log any exception during processing
+        print(f"Error during prediction: {e}")
+        return {"error": "Prediction failed."}
 
 @app.get("/")
 def read_root():
