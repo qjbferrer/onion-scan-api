@@ -25,7 +25,11 @@ def load_inceptionv3_model(model_path: str):
     state_dict = torch.load(model_path, map_location=device)
 
     if isinstance(state_dict, dict):
-        model.load_state_dict(state_dict)
+        try:
+            # Load state_dict with strict=False to allow mismatched keys
+            model.load_state_dict(state_dict, strict=False)
+        except Exception as e:
+            raise ValueError(f"Error loading state_dict: {e}")
     else:
         raise ValueError("Expected a state_dict, got something else.")
     
