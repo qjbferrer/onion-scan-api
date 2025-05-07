@@ -2,6 +2,7 @@ import torch
 from torchvision import transforms
 from PIL import Image
 
+
 # Class labels
 classes = ['Armyworm', 'Cutworm', 'Red Spider Mite']
 
