@@ -25,5 +25,5 @@ def load_inceptionv3_model(model_path: str):
     return model
 
 # Example usage
-model_path = os.path.join(os.path.dirname(__file__), 'model', 'inceptionv3.pth')  # Relative path
+model_path = '/opt/render/project/src/model/inceptionv3.pth' # Relative path
 model = load_inceptionv3_model(model_path)
