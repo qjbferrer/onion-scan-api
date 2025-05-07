@@ -9,7 +9,7 @@ classes = ['Armyworm', 'Cutworm', 'Red Spider Mite']
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model
-model = torch.load("models/inceptionv3.pth", map_location=device)
+model = torch.load("model/inceptionv3.pth", map_location=device)
 model.to(device)
 model.eval()
 
